@@ -19,7 +19,12 @@
     "recharts": "^2.1.9",
     "sass": "^1.49.9",
     "web-vitals": "^2.1.4",
-    "firebase": "^9.19.1"
+    "firebase": "^9.19.1",
+    "@fullcalendar/core": "4.3.1",
+    "auth": "^0.0.9",
+    "bootstrap-notify": "github:mouse0270/bootstrap-notify",
+    "bootstrap-switch": "3.3.4",
+    "bootstrap-tagsinput": "github:bootstrap-tagsinput/bootstrap-tagsinput"
   },
   "scripts": {
     "start": "react-scripts start",
