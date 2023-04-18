@@ -5,12 +5,16 @@ import "../../assets/css/black-dashboard.css"
 import "../../assets/css/nucleo-icons.css"
 
 import { signInWithEmailAndPassword } from "firebase/auth";
-//import { auth } from "../../firebase";
-import auth from "../../firebase";
+import { auth, db } from "../../firebase";
+//import db from "../../firebase";
+
 import { Password } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import primarycard from '../../assets/img/card-primary.png';
+
+import Register from "../register/Register";
+import { collection, getDocs } from "firebase/firestore"; 
 
 const Login = () => {
 
@@ -22,16 +26,26 @@ const Login = () => {
 
   const {dispatch} = useContext(AuthContext);
 
-  const handleLogin = (e) => {
+  const navigateRegister = () =>{  
+    navigate("/register");
+  }
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     console.log(auth);
     console.log(email);
     console.log(password);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
           //Signed in
           const user = userCredential.user;
+
+          /*const querySnapshot = await getDocs(collection(db, "users"));
+          querySnapshot.forEach((doc) => {
+            console.log('${doc.id} => ${doc.data()}');
+          });*/
+          
           dispatch({type:"LOGIN", payload:user});
           console.log(user);
           navigate('/');
@@ -40,6 +54,11 @@ const Login = () => {
         setError(true);
       }
     );
+
+    const querySnapshot = await getDocs(collection(db, "users"));
+          querySnapshot.forEach((doc) => {
+            console.log(doc.id);
+          });
   };
 
   return (
@@ -69,7 +88,7 @@ const Login = () => {
                 </a>
               </li>
               <li class="nav-item ">
-                <a href="register.html" class="nav-link">
+              <a href='javascript:void(0)' onClick={ navigateRegister } class="nav-link">
                   <i class="tim-icons icon-laptop"></i> Register
                 </a>
               </li>
